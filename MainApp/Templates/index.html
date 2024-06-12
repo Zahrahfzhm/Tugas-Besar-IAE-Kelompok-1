@@ -10,17 +10,17 @@
     <div class="container">
         <h1 class="mb-4">Informasi Detail Produk</h1>
         
-        <!-- <div class="card-body">
+        <div class="card-body">
             <h5 class="card-title">{{info['book_title']}}</h5>
             <p class="card-text"><b>Deskripsi:</b> {{info['desc']}}</p>
         <p class="card-text"><b>Harga:</b> {{info['price']}}</p>
-        </div> -->
+        </div>
 
         <div class="mt-4">
             <h6>Reviews</h6>
             <ul class="list-group">
                 {% for i in reviews['reviews'] %}
-                <li class="list-group-item">{{i['user_id']}} - {{'review']}}</li>
+                <li class="list-group-item">{{i['review']}}</li>
                 {% endfor %}
             </ul>
         </div>
