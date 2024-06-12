@@ -16,7 +16,7 @@ const db = mysql.createConnection({
   host: 'localhost',
   user: 'root',
   password: '',
-  database: 'User_Tugas',
+  database: 'user_tugas',
   port: 3308
 });
 
@@ -28,7 +28,7 @@ db.connect((err) => {
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-app.get('/addUserMessage', (req, res) => {
+app.get('/addUserMessages', (req, res) => {
   try {
     return res.json({ messages: addUserMessagesStorage });
   } catch (error) {
@@ -48,7 +48,23 @@ app.get('/deleteUserMessages', (req, res) => {
   }
 });
 
-// Listen add User
+// POST route to add a new user
+app.post('/users', (req, res) => {
+  const { id_user, nama_user, email_user } = req.body;
+  const user = { id_user, nama_user, email_user };
+
+  db.query('INSERT INTO pengguna SET ?', user, (err, result) => {
+    if (err) {
+      console.error('Error inserting user:', err);
+      res.status(500).json({ error: 'Internal Server Error' });
+      return;
+    }
+    console.log('User data inserted successfully');
+    res.status(201).json({ message: 'User added successfully' });
+  });
+});
+
+// Listen addUser
 async function listenAddUserMessages() {
   const channel = await rabbitMQConnection.createChannel();
   await channel.assertExchange(exchangeName, 'direct', { durable: false });
@@ -59,16 +75,12 @@ async function listenAddUserMessages() {
   channel.consume(q.queue, (message) => {
     if (message !== null) {
       const receivedJSON = JSON.parse(message.content.toString());
-      console.log(`Received an Add User Event using RabbitMQ:`, receivedJSON);
+      console.log(`Received an Add User using RabbitMQ:`, receivedJSON);
       addUserMessagesStorage.push(receivedJSON);
 
-      // Memasukkan data ke tabel user
+      // Memasukkan data ke tabel pengguna
       const { id_user, nama_user, email_user } = receivedJSON;
-      const user = {
-        id_user,
-        nama_user,
-        email_user
-      };
+      const user = { id_user, nama_user, email_user };
 
       db.query('INSERT INTO pengguna SET ?', user, (err, result) => {
         if (err) {
@@ -85,7 +97,7 @@ async function listenAddUserMessages() {
   });
 }
 
-// Listen Delete Film
+// Listen Delete User
 async function listenDeleteUserMessages() {
   const channel = await rabbitMQConnection.createChannel();
   await channel.assertExchange(exchangeName, 'direct', { durable: false });
@@ -96,10 +108,10 @@ async function listenDeleteUserMessages() {
   channel.consume(q.queue, (message) => {
     if (message !== null) {
       const receivedJSON = JSON.parse(message.content.toString());
-      console.log(`Received a Delete User Event using RabbitMQ:`, receivedJSON);
+      console.log(`Received a Delete User using RabbitMQ:`, receivedJSON);
       deleteUserMessagesStorage.push(receivedJSON);
 
-      // Menghapus data dari tabel user
+      // Menghapus pengguna berdasarkan id_user
       const { id_user } = receivedJSON;
 
       db.query('DELETE FROM pengguna WHERE id_user = ?', [id_user], (err, result) => {
@@ -130,9 +142,9 @@ app.get('/users', (req, res) => {
 });
 
 // Detail User
-app.get('/users/:user_id', (req, res) => {
-  const userId = parseInt(req.params.user_id);
-  db.query('SELECT * FROM pengguna WHERE id_user = ?', [userId], (err, rows) => {
+app.get('/users/:id_user', (req, res) => {
+  const id_user = parseInt(req.params.id_user);
+  db.query('SELECT * FROM pengguna WHERE id_user = ?', [id_user], (err, rows) => {
     if (err) {
       console.error('Error executing query:', err);
       res.status(500).json({ error: 'Internal Server Error' });
@@ -149,8 +161,8 @@ app.get('/users/:user_id', (req, res) => {
 amqp.connect('amqp://localhost').then(async (connection) => {
   rabbitMQConnection = connection;
   console.log('Connected to RabbitMQ');
-  await listenAddUserMessages();
-  await listenDeleteUserMessages();
+  await listenAddUserMessages();  // Corrected the function name
+  await listenDeleteUserMessages();  // Corrected the function name
   app.listen(PORT, () => {
     console.log(`😀 server on port ${PORT}`);
   });
