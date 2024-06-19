@@ -23,6 +23,8 @@ def get_product_info(product_id):
     product_review = get_reviews(product_id)
 
     #return product_review
+    # return product_info
+    # return product_review
     return render_template('index.html', info = product_info, reviews = product_review)
 
 if __name__ == '__main__':

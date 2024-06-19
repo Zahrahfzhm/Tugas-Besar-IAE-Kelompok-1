@@ -28,10 +28,10 @@ app.get('/products/:id', (req, res) => {
             });
         } else {
             if(result.length > 0) {
-                res.status(200).json({
-                    "message": "Berhasil menampilkan product",
-                    "data": result[0]
-                });
+                res.status(200).json(result[0]
+                    // "message": "Produk berhasil ditampilkan",
+                    // "data": result[0]
+                );
             } else {
                 res.status(404).json({
                     "message": "Product tidak ditemukan"

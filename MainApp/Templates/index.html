@@ -55,15 +55,15 @@
         </form>
         
         <div class="card-body" style="margin-top: 10px;">
-            <h5 class="card-title" >{{info['book_title']}}</h5>
-            <p class="card-text"><b>Deskripsi:</b> {{info['desc']}}</p>
+            <h5 class="card-title" >{{info['title_book']}}</h5>
+            <p class="card-text"><b>Deskripsi:</b> {{info['description']}}</p>
         <p class="card-text"><b>Harga:</b> {{info['price']}}</p>
         </div>
 
         <div class="mt-4">
             <h6>Reviews</h6>
             <ul class="list-group">
-                {% for i in reviews['reviews'] %}
+                {% for i in reviews %}
                 <li class="list-group-item">{{i['review']}}</li>
                 {% endfor %}
             </ul>
