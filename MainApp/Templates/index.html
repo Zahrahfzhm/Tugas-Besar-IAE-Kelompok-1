@@ -22,53 +22,67 @@
             margin-left: 20px;
             margin-right: 20px;
         }
+        .search-form {
+            margin-left: auto;
+        }
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-dark bg-primary">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="#">Navbar</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Home</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link disabled">Disabled</a>
-              </li>
-            </ul>
+    <div>
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+          <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <a class="navbar-brand" style="margin-left: 50px; margin-top: 13px; margin-bottom: 13px; font-size:x-large;font-weight: bold;" href="/products">BookStore</a>
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+              <form class="search-form d-flex" style="margin-left: auto;">
+                <input class="form-control me-2" type="search" placeholder="Cari" aria-label="Search">
+                <button class="btn btn-outline-light" type="submit" style="margin-right: 50px;">Cari</button>
+              </form>
+            </div>
+          </div>
+        </nav>
+    </div>
+
+    <div class="container" style="width: 1200px;">
+      <h2 class="mt-4 mb-4 text-center">{{info['title_book']}}</h2>
+
+      <div class="accordion" id="accordionPanelsStayOpenExample">
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne" style="background-color: white; color: black;">
+              <strong style="color: black;">Informasi Detail Produk</strong>
+            </button>
+          </h2>
+          <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" style="background-color: #D8E7F0">
+            <div class="accordion-body" style="color: black;">
+              <strong style="color: black;">Deskripsi Produk:</strong></br>
+              {{info['description']}} </br>
+            </div>
+            <div class="accordion-body" style="color: black;">
+              <strong style="color: black;">Harga Produk:</strong></br>
+              Rp. {{info['price']}} </br>
+            </div>
           </div>
         </div>
-    </nav>
-    <div class="container">
-        <h1 class="mb-4" style="margin-top: 20px;">Informasi Detail Produk</h1>
-
-        <form class="d-flex" style="width: 250px; float: right;">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-secondary" type="submit">Search</button>
-        </form>
-        
-        <div class="card-body" style="margin-top: 10px;">
-            <h4 class="card-title" >{{info['title_book']}}</h4>
-            <p class="card-text"><b>Deskripsi:</b> {{info['description']}}</p>
-        <p class="card-text"><b>Harga:</b> {{info['price']}}</p>
-        </div>
-
-        <div class="mt-4">
-            <h6>Reviews</h6>
-            <ul class="list-group">
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="true" aria-controls="panelsStayOpen-collapseTwo" style="background-color: white; color: black;">
+              <strong style="color: black;">Review Buku</strong>
+            </button>
+          </h2>
+          <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse" style="background-color: #D8E7F0;">
+            <div class="accordion-body" style="color: black;">
+              <ul class="list-group list-group-flush">
                 {% for i in reviews %}
                 <li class="list-group-item">{{i['review']}}</li>
                 {% endfor %}
-            </ul>
+              </ul>
+            </div>
         </div>
     </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>

@@ -9,10 +9,10 @@ app.get('/products', (req, res) =>{
             console.log (err);
             res.error(err.sqlMessage, res);
         } else {
-            res.status(200).json({
-                "message": "Berhasil menampilkan seluruh produk",
-                "data": result
-            });
+            res.status(200).json(result
+                // "message": "Berhasil menampilkan seluruh produk",
+                // "data": result
+            );
         }
     });
 })

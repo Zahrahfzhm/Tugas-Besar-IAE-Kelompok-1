@@ -9,10 +9,17 @@ def get_product(product_id):
     response = requests.get(f'http://localhost:5000/products/{product_id}')
     return response.json()
 
+#All products
+def get_allproduct():
+    response = requests.get(f'http://localhost:5000/products')
+    return response.json()
+
 #reviews
 def get_reviews(product_id):
     response = requests.get(f'http://localhost:5003/reviews/{product_id}')
     return response.json()
+
+# @app.route('/')
 
 @app.route('/products/<int:product_id>')
 def get_product_info(product_id):
@@ -26,6 +33,11 @@ def get_product_info(product_id):
     # return product_info
     # return product_review
     return render_template('index.html', info = product_info, reviews = product_review)
+
+@app.route('/products')
+def get_list_product():
+    list_product = get_allproduct()
+    return render_template('listproduct.html', allproducts = list_product)
 
 if __name__ == '__main__':
     app.run(debug=True, port=5004)
