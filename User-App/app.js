@@ -50,8 +50,8 @@ app.get('/deleteUserMessages', (req, res) => {
 
 // POST route to add a new user
 app.post('/users', (req, res) => {
-  const { id_user, nama_user, email_user } = req.body;
-  const user = { id_user, nama_user, email_user };
+  const { id_user, username, password } = req.body;
+  const user = { id_user, username, password };
 
   db.query('INSERT INTO pengguna SET ?', user, (err, result) => {
     if (err) {
@@ -79,8 +79,8 @@ async function listenAddUserMessages() {
       addUserMessagesStorage.push(receivedJSON);
 
       // Memasukkan data ke tabel pengguna
-      const { id_user, nama_user, email_user } = receivedJSON;
-      const user = { id_user, nama_user, email_user };
+      const { id_user, username, password } = receivedJSON;
+      const user = { id_user, username, password };
 
       db.query('INSERT INTO pengguna SET ?', user, (err, result) => {
         if (err) {
