@@ -9,7 +9,7 @@ def get_product(product_id):
     response = requests.get(f'http://localhost:5000/products/{product_id}')
     return response.json()
 
-#All products
+#all products
 def get_allproduct():
     response = requests.get(f'http://localhost:5000/products')
     return response.json()
@@ -19,7 +19,16 @@ def get_reviews(product_id):
     response = requests.get(f'http://localhost:5003/reviews/{product_id}')
     return response.json()
 
-# @app.route('/')
+#addreview
+# def add_review():
+#     response = requests.post(f'http://localhost:5003/create-review)')
+#     return response
+
+# # @app.route('/')
+
+# @app.route('/create-review')
+# def add_review()
+    
 
 @app.route('/products/<int:product_id>')
 def get_product_info(product_id):
